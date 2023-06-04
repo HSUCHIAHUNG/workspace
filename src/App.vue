@@ -1,17 +1,20 @@
 <script setup>
 import { onMounted, ref } from 'vue';
+/* header開關按紐 */
 const open = ref(true)
+const header = ref(null)
 
 const isOpen = () => {
   open.value = !open.value
-  console.log(open.value);
+   header.value.style.width = open.value ? '100%' : '0%';
+  
 }
 
 
 
 
 onMounted(() => {
-  // console.log('open');
+  
 })
 
 
@@ -33,8 +36,8 @@ onMounted(() => {
       <p class="text-white text-41px  m-t-8px m-l-24px text-left font-bold leading-61px
        lg:text-white lg:text-41px  lg:m-40px lg:font-bold lg:leading-none">CAT</p>
       <div class="absolute right-26px top-30px">
-       <img @click = isOpen src="./assets/cat/Vector.png" 
-        class="lg:hidden" alt="">
+      <!-- 開起選單按鈕 -->
+        <img @click = isOpen src="./assets/cat/Vector.png" class="lg:hidden" alt="">
       </div>
       <div class=" hidden 
       lg:block lg:h-[calc(100vh-161px)] lg:flex lg:items-end lg:justify-center">
@@ -52,18 +55,25 @@ onMounted(() => {
         </ul>
       </div>
     </div>
-
+    <!-- w-0% h-100vh overflow-auto duration-500 fixed z-10 bg-#232526  -->
       <!-- Header -->
-      <header class=" hidden
-      lg:block lg:row-start-1 lg:row-end-2 lg:col-start-2 lg:col-end-4">
+      <header ref="header" class="w-0% h-100vh overflow-auto duration-500 fixed z-10 bg-#232526 
+        lg:block lg:row-start-1 lg:row-end-2 lg:col-start-2 lg:col-end-4 lg:w-auto lg:h-auto lg:static">
         <nav class=" lg:w-90% lg:flex lg:flex-row-reverse lg:items-center lg:p-40px">
-          <ul class="lg:flex lg:items-center" >
-            <li class="lg:text-white lg:pr-55px">Home</li>
-            <li class="lg:text-white lg:pr-55px">Article</li>
-            <li class="lg:text-white lg:pr-55px ">About</li>
-            <li class="lg:text-white lg:pr-55px">Location</li> 
-            <li class="lg:text-white lg:pr-55px">News</li>
-            <li><img src="./assets/cat/zoom_in_24px.png" alt="" class="lg:w-full "></li>
+          <ul class="flex flex-col items-center  text-white font-bold
+          lg:flex lg:flex-row lg:items-center" >
+            <!-- 關閉選單按鈕 -->
+            <li class="w-50px self-end lg:hidden">
+              <img @click = isOpen src="./assets/cat/close.svg"  class=" p-15px " alt="">
+            </li>
+              <li class="   lg:pr-55px  p-10px text-#EFC862  w-50px">Home</li>
+              <li class="   lg:pr-55px  p-10px hover:text-#EFC862 w-50px">Article</li>
+              <li class="   lg:pr-55px  p-10px hover:text-#EFC862 w-50px">About</li>
+              <li class="   lg:pr-55px  p-10px hover:text-#EFC862 w-50px">Location</li> 
+              <li class="   lg:pr-55px  p-10px hover:text-#EFC862 w-50px">News</li>
+              <li class="p-20px w-50px lg:p-0 lg:w-fit">
+                <img src="./assets/cat/zoom_in_24px.png" alt="" class=" lg:w-full ">
+              </li>
           </ul>
         </nav>
       </header>
