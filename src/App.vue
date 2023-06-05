@@ -6,7 +6,7 @@ const header = ref(null)
 
 const isOpen = () => {
   open.value = !open.value
-   header.value.style.width = open.value ? '100%' : '0%';
+   header.value.style.height = open.value ? '100%' : '0%';
   
 }
 
@@ -57,7 +57,7 @@ onMounted(() => {
     </div>
     <!-- w-0% h-100vh overflow-auto duration-500 fixed z-10 bg-#232526  -->
       <!-- Header -->
-      <header ref="header" class="w-0% h-100vh overflow-auto duration-500 fixed z-10 bg-#232526 
+      <header ref="header" class="w-full h-0% overflow-auto duration-500 fixed z-10 bg-#232526 
         lg:block lg:row-start-1 lg:row-end-2 lg:col-start-2 lg:col-end-4 lg:w-auto lg:h-auto lg:static">
         <nav class=" lg:w-90% lg:flex lg:flex-row-reverse lg:items-center lg:p-40px">
           <ul class="flex flex-col items-center  text-white font-bold
@@ -117,7 +117,7 @@ onMounted(() => {
           </div>
         </div>
         <div class="w-100%  flex flex-row-reverse justify-end lg:flex-row lg:w-60% lg:flex ">
-          <img src="./assets/cat/Left.png" alt="" class="w-80px  h-53.25px lg:w-60% lg:h-full lg:object-cover">
+          <img src="./assets/cat/Left.png" alt="" class="w-30% lg:w-60% lg:h-full lg:object-cover">
           <div class="w-full flex flex-col justify-center text-left p-t-10px  gap-15px
             lg:w-40% lg:flex lg:flex-col lg:justify-center lg:text-left lg:p-25px lg:gap-[15px]">
             <p class="text-white">NEWS</p>
@@ -145,9 +145,3 @@ onMounted(() => {
 }
 
 </style>
-  
-
-
-
-
-
