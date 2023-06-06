@@ -30,7 +30,7 @@ onMounted(() => {
 
 <template>
   <div class="min-h-[100vh] w-full bg-#232526 bg-[url(src/assets/cat/Bg.png)] bg-no-repeat bg-contain bg-center grid  grid-rows-[77px_minmax(calc(100vh-388px,1fr))_311px] grid-cols-[1fr_1fr_1fr]
-  lg:min-h-[100vh] lg:bg-no-repeat lg:bg-auto lg:object-cover lg:bg-right lg:grid lg:grid-rows-[105px_minmax(calc(100vh-309px,1fr))_204px] lg:grid-cols-[163px_1fr]
+  lg:min-h-[100vh] lg:bg-no-repeat lg:bg-auto lg:object-cover lg:bg-center lg:grid lg:grid-rows-[105px_minmax(calc(100vh-309px,1fr))_204px] lg:grid-cols-[163px_1fr]
   ">
     <!-- 左邊 -->
     <div class=" h100% row-start-1 row-end-2 col-start-1 col-end-4
@@ -59,7 +59,7 @@ onMounted(() => {
     </div>
     <!-- w-0% h-100vh overflow-auto duration-500 fixed z-10 bg-#232526  -->
       <!-- Header -->
-      <header ref="header" class="w-full h-0% overflow-auto duration-500 fixed z-10 bg-#232526 
+      <header ref="header" class="w-full h-0% overflow-auto duration-500 fixed z-10 
         lg:block lg:row-start-1 lg:row-end-2 lg:col-start-2 lg:col-end-4 lg:w-auto lg:h-auto lg:static">
         <nav class=" lg:w-90% lg:flex lg:flex-row-reverse lg:items-center lg:p-40px">
           <ul class="flex flex-col items-center  text-white font-bold
@@ -144,14 +144,15 @@ onMounted(() => {
 
 <style>
   *{
-    text-decoration: none;
+    /* outline: 1px solid red; */
   }
 
   
 
   @media screen and (max-width: 1024px) {
     #app{
-    
+    margin: 0;
+    padding: 0;
   }
 }
 
