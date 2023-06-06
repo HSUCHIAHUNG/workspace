@@ -103,7 +103,7 @@ onMounted(() => {
           <div class="w-295px text-36px lg:w-[400px] lg:text-[72px]">
             <p class=" w-295px h-100px leading-50px text-left pb-24px text-white font-bold
             lg:leading-[72px] lg:text-left lg:pb-20px lg:text-white lg:w-auto lg:h-auto ">
-              EAT<br>
+              EBT<br>
               Everyday
             </p>
             <p class="text-11px text-left text-white leading-15px font-normal
