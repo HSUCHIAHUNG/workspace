@@ -9,6 +9,7 @@ import { RouterLink, RouterView } from 'vue-router'
 <style>
   *{
     text-decoration: none;
+    /* outline: 1px solid red; */
   }
 
 

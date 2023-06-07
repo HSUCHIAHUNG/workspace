@@ -1,37 +1,45 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import cat from '../view/cata.vue'
+import def_layout from '../components/default_layout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: cat
-    },
-    {
-        path: '/cata',
-        name: 'cata',
-        component: () => import('../view/cata.vue')
-    },
-    {
-        path: '/catb',
-        name: 'catb',
-        component: () => import('../view/catb.vue')
-    },
-    {
-        path: '/catc',
-        name: 'catc',
-        meta: {
-            requiresAuth: true // 添加一個 meta 屬性來標記需要登錄的頁面
+      name: 'def_layout',
+      component: def_layout,
+      children: [
+        {
+          path: '',
+          name: 'cata',
+          component: () => import('../view/cata.vue')
         },
-        component: () => import('../view/catc.vue')
+        {
+            path: 'catb',
+            name: 'catb',
+            component: () => import('../view/catb.vue')
+        },
+        {
+            path: 'catc',
+            name: 'catc',
+            meta: {
+                requiresAuth: true // 添加一個 meta 屬性來標記需要登錄的頁面
+            },
+            component: () => import('../view/catc.vue')
+        },
+        
+      ],
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('../components/AboutView.vue')
-    }
+      path: '/cat_supplies',
+      name: 'cat_supplies',
+      component: () => import('../view/cat_supplies/index.vue')
+    },
+    {
+      path: '/cat_supplies/:id',
+      name: 'cat_supplies_id',
+      component: () => import('../view/cat_supplies/_id.vue')
+    },
   ]
 })
 
@@ -46,7 +54,6 @@ router.beforeEach((to, from, next) => {
   })
   
   
-
 
 export default router
 
