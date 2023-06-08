@@ -1,9 +1,23 @@
 <script setup>
+import { ref} from 'vue'
+
 import { RouterLink, RouterView } from 'vue-router'
+import index from './view/cat_supplies/index.vue'
+const id_props = ref('')
+
+const change = (e) =>{
+  // console.log(e);
+  id_props.value = e
+}
+
+
 </script>
 
 <template>
-  <RouterView />
+  <RouterView :msg="id_props" @change="change"/>
+
+  
+
 </template>
 
 <style>

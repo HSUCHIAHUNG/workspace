@@ -46,11 +46,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     if (to.meta.requiresAuth) {
       alert('請登入會員')
+      next(false) 
       return
     }
     
     next() 
-    
   })
   
   
