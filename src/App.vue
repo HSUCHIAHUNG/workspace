@@ -1,5 +1,5 @@
 <script setup>
-import { ref} from 'vue'
+import { ref } from 'vue'
 
 import { RouterLink, RouterView } from 'vue-router'
 import index from './view/cat_supplies/index.vue'
@@ -10,11 +10,15 @@ const change = (e) =>{
   id_props.value = e
 }
 
+const openval = (e) => {
+  console.log(e);
+}
+
 
 </script>
 
 <template>
-  <RouterView :msg="id_props" @change="change"/>
+  <RouterView :msg="id_props" @change="change"  @openval="openval"/>
 
   
 

@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import def_layout from '../components/default_layout.vue'
+import def_layout from '../view/default_layout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -27,7 +27,13 @@ const router = createRouter({
             },
             component: () => import('../view/catc.vue')
         },
-        
+        {
+          path: 'Login',
+          name: 'Login',
+          meta: {
+          },
+          component: () => import('../view/Login.vue')
+        },
       ],
     },
     {

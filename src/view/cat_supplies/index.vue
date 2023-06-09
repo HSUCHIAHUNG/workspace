@@ -1,18 +1,18 @@
 <script setup>
 import { ref, reactive } from "vue";
 import { RouterLink, RouterView } from 'vue-router'
-const emit = defineEmits(['change'])
-const id_props = defineProps({
+    const emit = defineEmits(['change'])
+    const id_props = defineProps({
         msg: ''
-        
     })
+
     const idx = ref('')
     
     const goToCourses = () => {
         const timestamp = Date.now();
         idx.value = timestamp;
         emit('change', idx.value)
-        console.log(id_props.msg);
+        console.log(idx.value);
     };
 
     
@@ -32,9 +32,9 @@ const id_props = defineProps({
         </router-link> -->
 
         <router-link 
-        :to="`/cat_supplies/${idx}`" 
-        @click.prevent="goToCourses" 
-        class="text-black bg-red-300 m-10px p-5px">item1
+            :to="`/cat_supplies/${idx}`" 
+            @click.prevent="goToCourses" 
+            class="text-black bg-red-300 m-10px p-5px">item1
         </router-link>
 
         <router-link 

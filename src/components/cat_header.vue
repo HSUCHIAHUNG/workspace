@@ -1,14 +1,20 @@
 <script setup>
   import { ref,onBeforeUnmount,watch  } from 'vue';
-  import { useRouter } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
 
-  /* header開關按紐 */
+  const emit  = defineEmits(['enav_val']) 
+  const props = defineProps(['pnav_val'])
+
+  /* header開關按紐 */  
   const open = ref(false)
+  const route = useRoute();
   const router = useRouter();
   // 定義emit
 
   const isOpen = () => {
     open.value = !open.value
+    emit('enav_val', open.value)
+    // console.log(props.pnav_val);
   }
 
 
@@ -17,7 +23,7 @@
   () => router.currentRoute.value,
   () => {
     open.value = !open.value; 
-    // console.log(router.currentRoute.value);
+    console.log(router.currentRoute.value.path);
   }
   );
   
@@ -52,7 +58,9 @@
             <li class="   lg:pr-55px  p-10px hover:text-#EFC862 w-50px">
               <router-link to="/cat_supplies" class="text-#ffffff">Location</router-link>
             </li> 
-            <li class="   lg:pr-55px  p-10px hover:text-#EFC862 w-50px">News</li>
+            <li class="   lg:pr-55px  p-10px hover:text-#EFC862 w-50px">
+              <router-link to="Login" class="text-#ffffff">Login</router-link>
+            </li>
             <li class="p-20px w-50px lg:p-0 lg:w-fit">
               <img src="../assets/cat/zoom_in_24px.png" alt="" class=" lg:w-full ">
             </li>
