@@ -1,9 +1,13 @@
 <script setup>
   import { ref,onBeforeUnmount,watch  } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
+  import { setupUserAuthStore } from "../stores/userAurhStore" // stores資料夾/userAuthStore的方法(pinia)
 
   const emit  = defineEmits(['enav_val']) 
   const props = defineProps(['pnav_val'])
+
+  const userAuthStore = setupUserAuthStore()
+  const {FN_LOGOUT} = userAuthStore
 
   /* header開關按紐 */  
   const open = ref(false)
@@ -17,15 +21,19 @@
     // console.log(props.pnav_val);
   }
 
-
-
   watch(
-  () => router.currentRoute.value,
-  () => {
-    open.value = !open.value; 
-    console.log(router.currentRoute.value.path);
-  }
+    () => router.currentRoute.value,
+    () => {
+      open.value = !open.value; 
+      // console.log(router.currentRoute.value.path);
+    }
   );
+
+  const Logout = () => {
+    FN_LOGOUT()
+    window.location.reload();
+  }
+
   
 </script>
 
@@ -59,7 +67,7 @@
               <router-link to="/cat_supplies" class="text-#ffffff">Location</router-link>
             </li> 
             <li class="   lg:pr-55px  p-10px hover:text-#EFC862 w-50px">
-              <router-link to="Login" class="text-#ffffff">Login</router-link>
+              <a href="javascript:;" @click="Logout" class="text-#ffffff">Logout</a>
             </li>
             <li class="p-20px w-50px lg:p-0 lg:w-fit">
               <img src="../assets/cat/zoom_in_24px.png" alt="" class=" lg:w-full ">

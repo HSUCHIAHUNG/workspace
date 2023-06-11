@@ -1,17 +1,27 @@
 import { createApp } from 'vue';
 import './style.css';
 import App from './App.vue';
-import router from './router/index.js'
 import 'virtual:uno.css';
 import "./assets/css/reset.css";
-// import Swal from 'sweetalert2';
-import { createPinia } from 'pinia'
+import { setupRouter } from './router/index'
+import { setupSwal } from '@/plugins'
+// import { setupVeeValidator, setupSwal } from '@/plugins'
+import { setupPinia } from './stores/index'
 
-const pinia = createPinia() 
 
-createApp(App)
-    .use(router)
-    .use(pinia)
-    // .use(Swal)
-    .mount('#app')
+async function setupApp() {
+    const AppInstance = createApp(App)
+  
+    // setupVeeValidator(AppInstance) //標單驗證
+  
+    setupPinia(AppInstance) 
+    
+    setupSwal(AppInstance) 
+  
+    await setupRouter(AppInstance) // 一般的router
+    
+    AppInstance.mount('#app')
+  }
+  
+  setupApp()
 

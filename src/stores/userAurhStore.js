@@ -1,5 +1,4 @@
 // user資料處理
-
 import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import {SET_COOKIES, REMOVE_COOKIES} from '../utils/js-cookie'
@@ -17,6 +16,7 @@ export const setupUserAuthStore = defineStore('user-auth-store', ()=> {
     })
   }  
 
+  // 把token存進userAccessToken變數當中，讓後在存進cookie
   function FN_SETUP_ACCESSTOKEN (token) {
     return new Promise((resolve)=> {
       userAccessToken.value = token
