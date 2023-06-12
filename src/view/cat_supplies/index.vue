@@ -1,61 +1,35 @@
 <script setup>
-import { ref, reactive } from "vue";
+import { computed } from "@vue/reactivity";
+import { ref, reactive, onMounted } from "vue";
 import { RouterLink, RouterView } from 'vue-router'
-    const emit = defineEmits(['change'])
-    const id_props = defineProps({
-        msg: ''
-    })
 
     const idx = ref('')
-    
-    const goToCourses = () => {
-        const timestamp = Date.now();
-        idx.value = timestamp;
-        emit('change', idx.value)
-        console.log(idx.value);
-    };
+    const book = reactive([
+        {id:1},
+        {id:2},
+        {id:3}
+    ])
 
-    
-
-   
+    onMounted (() => {
+        idx.value = Date.now()
+    })
 
 </script>
 
 <template>
-  
-   
-    <div class="p-50px text-center">
-
-        <!-- <router-link 
-        to="/def_layout/cata"
-        class="text-black bg-red-300 m-10px p-5px">backhome
-        </router-link> -->
+    <!-- router動態id首頁 -->
+    <div class="p-50px text-center" >
 
         <router-link 
-            :to="`/cat_supplies/${idx}`" 
-            @click.prevent="goToCourses" 
-            class="text-black bg-red-300 m-10px p-5px">item1
-        </router-link>
-
-        <router-link 
-            :to="`/cat_supplies/${idx}`" 
-            @click.prevent="goToCourses" 
-            class="text-black bg-blue-300 m-10px p-5px">item2
-        </router-link>
-
-        <router-link 
-            :to="`/cat_supplies/${idx}`" 
-            @click.prevent="goToCourses" 
-            class="text-black bg-yellow-300 m-10px p-5px">item3
+            v-for="(item,index) in book"
+            :key="item.id"
+            :to="`/cat_supplies/${item.id}`" 
+            class="text-black bg-red-300 m-10px p-5px"
+            > item{{ item.id }}
         </router-link>
 
     </div>
     
-
 </template>
 
-<style>
-
-
-</style>
 

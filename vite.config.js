@@ -16,7 +16,7 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/service/api/': {
+        '/service/api/': {
         target: 'http://taitungttgo.cbsdinfo.com.tw/',
         changeOrigin: true,
         rewrite: (path) => {

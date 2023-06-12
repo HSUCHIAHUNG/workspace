@@ -18,7 +18,7 @@ export function setupRoutePermission (routerInstane) {
   
       // 取得Token
       const userAccessToken = GET_COOKIES() || ''
-
+      
       // 把Token放進去pinia跟cookie
       await FN_SETUP_ACCESSTOKEN(userAccessToken)
 
