@@ -7,7 +7,7 @@ export function GET_COOKIES() {
 }
 
 export function SET_COOKIES(token) {
-  return Cookies.set(TokenKey, token);
+  return Cookies.set(TokenKey, token, {expires: 1});
 }
 
 export function REMOVE_COOKIES() {

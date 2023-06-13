@@ -1,16 +1,24 @@
 <script setup>
-  import { onBeforeUnmount,watch,ref, onMounted  } from 'vue';
+  import { watch, ref, onMounted, computed } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
-  import { setupUserAuthStore } from "../stores/userAurhStore" // stores資料夾/userAuthStore的方法(pinia)
+  import { GET_COOKIES } from "../utils/js-cookie" 
 
   // header開關按紐  
-  const open = ref(false)
+  const open = ref(false);
   const router = useRouter();
   const route = useRoute();
+  const turnover = ref('');
 
-  // LOGOUT按鈕使用清除cookie跟store資料
-  const userAuthStore = setupUserAuthStore()
-  const {FN_LOGOUT} = userAuthStore
+  const userAccessToken = GET_COOKIES() || '';
+
+
+  onMounted (() => {
+    if(userAccessToken) {
+      turnover.value = 'Logout'
+    } else {
+      turnover.value = 'Login'
+    }
+  })
 
   // 點擊漢堡按鈕控制header開關
   const isOpen = () => {
@@ -24,13 +32,6 @@
       open.value = !open.value; 
     }
   );
-
-  // 登出並清除store跟cookie
-  const Logout = () => {
-    FN_LOGOUT()
-    window.location.reload();
-  }
-
   
 </script>
 
@@ -83,13 +84,13 @@
             hover:text-#EFC862">Location
           </router-link>
         </li> 
-        <li class="   lg:pr-55px  p-10px  w-50px">
-          <a href="javascript:;" 
-            @click="Logout" 
-            class="text-#ffffff 
-            hover:text-#EFC862">Logout
-          </a>
-        </li>
+        <li class="   lg:pr-55px  p-10px  w-50px ">
+          <router-link 
+            to="Login" 
+            class="text-#232526  bg-#EFC862 p-10px  rounded-5px
+            hover:text-#ffffff ">{{turnover}}
+          </router-link>
+        </li> 
         <li class="p-20px w-50px lg:p-0 lg:w-fit">
           <img src="../assets/cat/zoom_in_24px.png" alt="" class=" lg:w-full ">
         </li>

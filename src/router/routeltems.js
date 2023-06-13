@@ -1,12 +1,12 @@
 // 設定路由
 export const routes = [
-    {
-        path: '/Login',
-        name: 'Login',
-        meta: {
-        },
-        component: () => import('../view/Login.vue')
-    },
+    // {
+    //     path: '/Login',
+    //     name: 'Login',
+    //     meta: {
+    //     },
+    //     component: () => import('../view/Login.vue')
+    // },
     {
         path: '/',
         name: 'def_layout',
@@ -27,7 +27,11 @@ export const routes = [
                 name: 'catc',
                 component: () => import('../view/catc.vue')
             },
-
+            {
+                path: 'Login',
+                name: 'Login',
+                component: () => import('../view/Login.vue')
+            }
         ],
     },
     {
