@@ -1,28 +1,29 @@
 <script setup>
-  import { watch, ref, onMounted, computed } from 'vue';
+  import { watch, ref, onMounted, computed, inject  } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
-  import { GET_COOKIES } from "../utils/js-cookie" 
+
+
+  // 練習接收props
+  const props = defineProps(['turnover'])
+
+  // 練習定義emit發送
+  const emit = defineEmits(['header_togle'])
+
+  // 練習用provide、inject從父層將Token傳到子層做接收
+  const check_cookie = inject('check_cookie')
 
   // header開關按紐  
   const open = ref(false);
   const router = useRouter();
   const route = useRoute();
-  const turnover = ref('');
-
-  const userAccessToken = GET_COOKIES() || '';
-
-
-  onMounted (() => {
-    if(userAccessToken) {
-      turnover.value = 'Logout'
-    } else {
-      turnover.value = 'Login'
-    }
-  })
 
   // 點擊漢堡按鈕控制header開關
   const isOpen = () => {
     open.value = !open.value
+    // 練習傳遞emit
+    emit('header_togle', open.value)
+    // 練習接收props
+    // console.log(props.turnover);
   }
 
   // 如果router變動就，控制手機板header開關
@@ -50,26 +51,28 @@
       <ul class="flex flex-col items-center  text-white font-boldlg:flex lg:flex-row lg:items-center" >
 
         <!-- 關閉選單按鈕 -->
-        <li class="w-50px self-end block lg:hidden">
+        <li class="w-auto self-end block lg:hidden">
           <img @click = isOpen src="../assets/cat/close.svg"  class=" p-20px " alt="">
         </li>
 
         <!-- router link -->
-        <li class="   lg:pr-55px  p-10px  w-50px">
-          <router-link 
+        <li class=" lg:pr-75px p-10px w-auto">
+          <router-link     
             to="/" 
             class="text-white  hover:text-#EFC862"
             :class="{'!text-#EFC862': route.name == 'cata'}">Home
           </router-link>
         </li>
-        <li class="   lg:pr-55px  p-10px  w-50px">
+
+        <li class="   lg:pr-75px  p-10px  w-auto">
           <router-link 
             to="catb"
             class="text-#ffffff hover:text-#EFC862"
             :class="{'!text-#EFC862': route.name == 'catb'}">Article
           </router-link>
         </li>
-        <li class="   lg:pr-55px  p-10px  w-50px">
+
+        <li class="   lg:pr-75px  p-10px  w-auto">
           <router-link 
             to="catc" 
             class="text-#ffffff 
@@ -77,20 +80,25 @@
             :class="{'!text-#EFC862': route.name == 'catc'}">About
           </router-link>
         </li>
-        <li class="   lg:pr-55px  p-10px  w-50px">
+
+        <li class="lg:pr-75px  p-10px  w-auto">
+          <slot name="scope" :openval=open></slot>
           <router-link 
             to="/cat_supplies" 
             class="text-#ffffff 
             hover:text-#EFC862">Location
           </router-link>
         </li> 
-        <li class="   lg:pr-55px  p-10px  w-50px ">
+
+        <li class=" p-10px  w-auto lg:mr-120px lg:w-30px ">
           <router-link 
             to="Login" 
-            class="text-#232526  bg-#EFC862 p-10px  rounded-5px
-            hover:text-#ffffff ">{{turnover}}
+            class=" text-#232526 hover:text-#ffffff bg-#EFC862 p-5px rounded-5px lg:p-10px">
+            <!-- 判斷是否有token變換Login或Logout文字 -->
+            <slot name="turnover" :key="open" ></slot> 
           </router-link>
         </li> 
+
         <li class="p-20px w-50px lg:p-0 lg:w-fit">
           <img src="../assets/cat/zoom_in_24px.png" alt="" class=" lg:w-full ">
         </li>
@@ -100,4 +108,10 @@
   </header>
 
 </template>
+
+<style>
+  *{
+    /* outline: 1px solid red; */
+  }
+</style>
 

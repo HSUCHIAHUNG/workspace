@@ -4,15 +4,14 @@ import App from './App.vue';
 import 'virtual:uno.css';
 import "./assets/css/reset.css";
 import { setupRouter } from './router/index'
-import { setupSwal } from '@/plugins'
-// import { setupVeeValidator, setupSwal } from '@/plugins'
+import { setupSwal, setupVeeValidator } from '@/plugins'
 import { setupPinia } from './stores/index'
 
 
 async function setupApp() {
     const AppInstance = createApp(App)
   
-    // setupVeeValidator(AppInstance) //標單驗證
+    setupVeeValidator(AppInstance) //表單驗證
   
     setupPinia(AppInstance) 
     

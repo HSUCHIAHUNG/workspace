@@ -1,12 +1,12 @@
 // 設定路由
 export const routes = [
-    // {
-    //     path: '/Login',
-    //     name: 'Login',
-    //     meta: {
-    //     },
-    //     component: () => import('../view/Login.vue')
-    // },
+    {
+        path: '/validaten',
+        name: 'validaten',
+        meta: {
+        },
+        component: () => import('../view/vee-validate.vue')
+    },
     {
         path: '/',
         name: 'def_layout',
@@ -31,7 +31,13 @@ export const routes = [
                 path: 'Login',
                 name: 'Login',
                 component: () => import('../view/Login.vue')
+            },
+            {
+                path: 'singup',
+                name: 'singup',
+                component: () => import('../view/singup.vue')
             }
+
         ],
     },
     {

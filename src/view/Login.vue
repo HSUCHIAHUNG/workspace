@@ -1,11 +1,12 @@
 <script setup>
   import { inject,ref } from 'vue';
-  import { useRouter } from 'vue-router';
+  import { useRouter, useRoute } from 'vue-router';
   import { setupUserAuthStore } from '../stores/userAurhStore'  // stores資料夾/userAuthStore的方法(pinia)
   import { FETCH_USER_A } from '../service2/api/user' // services2 資料夾裡面的user.js
 
   const username = ref('')
   const password = ref('')
+  const route = useRoute();
 
   // 這樣就可以調用swal
   const Swal = inject('$swal') 
@@ -55,17 +56,30 @@
 
         <h1 class="font-bold text-36px m-b-24px leading-[1] text-white lg:text-72px ">登入頁</h1>
 
-        <form @submit.prevent="onSubmit" class="flex flex-col gap-10px max-w-50% min-w-300px">
+        <form @submit.prevent="onSubmit" class="flex flex-col gap-13px max-w-50% min-w-300px">
           <label class="w-100 text-white font-bold"  for="">帳號</label>
           <input type="text" v-model="username">
           <label class="text-white font-bold" for="">密碼</label>
-          <input type="text" v-model="password">
+          <input type="password" v-model="password">
           <button type="submit" 
-            class="  text-center text- black m-t-25px p10px bg-[#EFC862] brightness-50 border-0 rounded-5px transition  
+            class="  text-center text- black m-t-25px m-b-15px p10px bg-[#EFC862] brightness-50 border-0 rounded-5px transition cursor-pointer 
             hover:border-1px hover:brightness-100 ">登入
           </button>
+          <p class="text-#ffffff text-center text-20px">還沒加入會員?
+            <router-link 
+              to="/singup" 
+              class="text-blue-400 p-l-10px hover:text-#EFC862"
+              :class="{'!text-#EFC862': route.name == 'singup'}">Home
+            </router-link>
+          </p>
         </form>
 
     </section>
 
 </template>
+
+<style>
+  *{
+    /* outline: 1px solid red; */
+  }
+</style>
