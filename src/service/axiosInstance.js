@@ -4,6 +4,7 @@ import { GET_COOKIES } from "../utils/js-cookie";
 
 /* ------------- 此api為Router更新頁面時使用 --------------- */
 
+// 創建axios實例並給定預設網址
 const axiosInstance = axios.create({
   baseURL: '/service/api',
 });
@@ -30,7 +31,10 @@ axiosInstance.interceptors.request.use(function (config) {
 // 接收response 
 axiosInstance.interceptors.response.use(function (response) {
   // data => 使用者資訊跟Token & status => http的status code
-  const {data, status} = response
+  const { status,  data:respData = {}} = response
+  const {data, message, success} = respData
+
+  // 回傳結果
   return {data, status};   
 },
 

@@ -9,9 +9,6 @@
   const password = ref('')
   const route = useRoute();
 
-  // 練習定義emit發送
-  const emit = defineEmits(['user_name'])
-
   // 這樣就可以調用swal
   const Swal = inject('$swal') 
 
@@ -37,9 +34,6 @@
   const  {data, message, success} = await FETCH_USER_A.login(user)
   
   await FN_SETUP_USERINFO(data)
-
-  // 練習傳遞emit
-  emit('user_name', data.name)
 
   // 如果驗證沒有通過就直接return
   if(!success) return 

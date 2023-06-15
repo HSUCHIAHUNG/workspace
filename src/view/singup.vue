@@ -4,6 +4,7 @@
   import { useRouter, useRoute } from 'vue-router';
   import { FETCH_USER_A } from '../service2/api/user' // services2 資料夾裡面的user.js
   import { useForm } from 'vee-validate';
+  import Textinput  from '../components/common/Textinput.vue'
 
   const swal = inject('$swal');
   const router = useRouter();
@@ -12,25 +13,7 @@
     console.log(e);
   }
 
-  // 密碼與確認密碼驗證type使用
-  // const passwordViewType = ref({
-  //   password: 'password',
-  //   confirmPassword: 'password',
-  // });
-
-  // 驗證表格
-  // const formValidationSchema = computed(() => ({
-  //   name: 'required',
-  //   account: 'required|accountRule',
-  //   password: 'required|pwdRule',
-  //   confirmPassword: 'required|alpha_num|confirmed:password',
-  //   phoneNumber: 'required|mobile',
-  // }));
-
-
-
-
- 
+  
 
 </script>
 
@@ -38,10 +21,13 @@
 
   <section class="col-start-1 col-end-4 row-start-2 row-end-3 flex flex-col justify-center items-center lg:col-start-2 lg:col-end-4">
 
+
         <h1 class="font-bold text-36px m-b-16px leading-[1] text-white lg:text-65px ">註冊</h1>
 
         <V-Form @submit="onSubmit" class="flex flex-col gap-10px  min-w-300px max-w-50% m-b-30px lg:min-w-400px">
           
+          <!-- <Textinput name="username"></Textinput> -->
+
           <label for="username" class=" flex flex-col gap-10px text-white p-t-5px"> 姓名
             <V-Field name="username" rules="required" placeholder="請輸入姓名" class=" rounded-5 p-10px border-none "></V-Field>
             <V-ErrMsg name="username" class="text-#EFC862 "></V-ErrMsg>

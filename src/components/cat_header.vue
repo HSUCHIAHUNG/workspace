@@ -21,11 +21,11 @@
   const isOpen = () => {
     open.value = !open.value
 
-    // 練習傳遞emit
-    emit('header_togle', open.value)
-    
-    // 練習接收props
-    // console.log(props.turnover);
+  // 練習傳遞emit
+  emit('header_togle', open.value)
+  
+  // 練習接收props
+  // console.log(props.turnover);
   }
 
 </script>
@@ -94,9 +94,11 @@
             class=" text-#232526 hover:text-#ffffff bg-#EFC862 p-5px rounded-5px lg:p-10px"
             @click="isOpen">
             <!-- 判斷是否有token變換Login或Logout文字 -->
-            <slot name="turnover" :key="open" ></slot> 
+            <slot name="turnover"></slot> 
           </router-link>
-          <slot name="user_name"></slot>
+          
+          <!-- 練習發axios取得使用者資訊並使用solt放到畫面上 -->
+          <!-- <slot name="user_name"></slot> -->
 
         </li> 
 

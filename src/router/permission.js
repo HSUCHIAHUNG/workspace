@@ -24,6 +24,40 @@ export function setupRoutePermission (routerInstane) {
     // 把Token放進去pinia跟cookie
     await FN_SETUP_ACCESSTOKEN(userAccessToken)
     
+    // 如果即將前往catc這個分頁就跳alert後停留在原本的頁面
+    if (to.path == '/catc' && !userAccessToken) {
+      alert('請登入會員')
+      return false
+    }
+
+    // 如果要前往頁面不是Login就進來判斷
+    if(to.path !== '/Login') {
+ 
+      // 如果沒有Token就導向登入頁面
+      if(!userAccessToken) {
+        return true
+
+      // 有Token就取得使用者資訊存進data
+      } else {
+        const { data={} , status } = await FETCH_USER.getUserInfo()
+        const { name } = data
+        
+        // 如果status code = 200就把使用者資訊存進pinia
+        if(status == 200 ) {
+          FN_SETUP_USERINFO(name)
+          return true
+
+        // 否則清除使用者資訊後導向登入頁面
+        } else {
+          await FN_LOGOUT()
+          return '/Login'
+        }
+      }
+    }
+
+    
+
+
     // 如果當前頁面是登入頁面就判斷是否有Token，回傳false，否則回傳true
     if (to.path == '/Login') {
       if (userAccessToken) {
@@ -50,16 +84,6 @@ export function setupRoutePermission (routerInstane) {
       } else {
         return true;
       }
-    }
-
-        // 如果即將前往catc這個分頁就跳alert後停留在原本的頁面
-    if (to.path !== '/catc') return;
-
-    if (to.path == '/catc' && !userAccessToken) {
-      alert('請登入會員')
-      return false
-    } else {
-      return true;
     }
   })
 }

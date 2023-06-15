@@ -8,16 +8,12 @@
   import { setupUserAuthStore } from "../stores/index"
   import { computed } from '@vue/reactivity';
   import { storeToRefs } from 'pinia';
-  import Login from "../view/Login.vue"
   
-
   const check_cookie = ref('provide_test');
   const store_cookie = setupUserAuthStore();
-  const user_title = ref('')
-
 
   // 練習從pinia取token出來用
-  const {userAccessToken} = storeToRefs(store_cookie);
+  const {userAccessToken, userInfo} = storeToRefs(store_cookie);
 
   // 練習從父層將Token傳provide給cat_header組件接收
   provide('check_cookie', check_cookie.value)
@@ -31,9 +27,7 @@
     // console.log(e);
   }
 
-  function user_val (e) {
-    user_title.value = e;
-  }
+
   
 </script>
 
@@ -50,18 +44,19 @@
     <!-- @header_togle : 練習接收emit -->
     <catHeader :turnover="turnover_toggle" @header_togle="header_togle">
 
-      <!-- 具名插槽 -->
+      <!-- 具名插槽(判斷是否有token變換Login或Logout文字) -->
       <template #turnover>
         {{ turnover_toggle }}
       </template>
 
+      <!-- 練習發axios取得使用者資訊並使用solt放到畫面上 -->
       <template #user_name>
-        {{ user_title }}
+        {{ userInfo }}
       </template>
 
-      <!-- 具名作用域插槽 -->
+      <!-- 具名作用域插槽(練習從子層取得資料) -->
       <template #scope="{ openval }">
-        <!-- {{ openval }} -->
+        {{ openval }}
       </template>
 
 
