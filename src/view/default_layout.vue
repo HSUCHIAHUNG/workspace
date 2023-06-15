@@ -2,17 +2,18 @@
 
   import { ref, onMounted, provide } from 'vue'
   import { RouterView } from 'vue-router'
-  import { GET_COOKIES } from "../utils/js-cookie" 
   import catHeader from "../components/cat_header.vue";
   import cat_leftside from "../components/cat_leftside.vue";
   import cat_footer from "../components/cat_footer.vue";
   import { setupUserAuthStore } from "../stores/index"
   import { computed } from '@vue/reactivity';
   import { storeToRefs } from 'pinia';
+  import Login from "../view/Login.vue"
   
 
   const check_cookie = ref('provide_test');
   const store_cookie = setupUserAuthStore();
+  const user_title = ref('')
 
 
   // 練習從pinia取token出來用
@@ -28,12 +29,12 @@
   // 練習從子層傳遞emit給父層接收
   function header_togle (e) {
     // console.log(e);
-    
   }
 
-
+  function user_val (e) {
+    user_title.value = e;
+  }
   
-
 </script>
 
 <template>
@@ -54,6 +55,10 @@
         {{ turnover_toggle }}
       </template>
 
+      <template #user_name>
+        {{ user_title }}
+      </template>
+
       <!-- 具名作用域插槽 -->
       <template #scope="{ openval }">
         <!-- {{ openval }} -->
@@ -63,7 +68,7 @@
 
     </catHeader >
    
-    <RouterView />
+    <RouterView @user_name="user_val" />
   
     <cat_footer></cat_footer>
 

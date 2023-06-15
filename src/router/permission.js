@@ -29,9 +29,9 @@ export function setupRoutePermission (routerInstane) {
       if (userAccessToken) {
         const confirmLogout = await Swal.fire({
           icon: 'question',
-          text: '您确定要登出吗？',
+          text: '您確定要登出嗎？',
           showCancelButton: true,
-          confirmButtonText: '确定',
+          confirmButtonText: '確定',
           cancelButtonText: '取消',
         });
     

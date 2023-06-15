@@ -20,20 +20,14 @@
   // 點擊漢堡按鈕控制header開關
   const isOpen = () => {
     open.value = !open.value
+
     // 練習傳遞emit
     emit('header_togle', open.value)
+    
     // 練習接收props
     // console.log(props.turnover);
   }
 
-  // 如果router變動就，控制手機板header開關
-  watch(
-    () => router.currentRoute.value,
-    () => {
-      open.value = !open.value; 
-    }
-  );
-  
 </script>
 
 <template>
@@ -60,7 +54,8 @@
           <router-link     
             to="/" 
             class="text-white  hover:text-#EFC862"
-            :class="{'!text-#EFC862': route.name == 'cata'}">Home
+            :class="{'!text-#EFC862': route.name == 'cata'}"
+            @click="isOpen">Home
           </router-link>
         </li>
 
@@ -68,7 +63,8 @@
           <router-link 
             to="catb"
             class="text-#ffffff hover:text-#EFC862"
-            :class="{'!text-#EFC862': route.name == 'catb'}">Article
+            :class="{'!text-#EFC862': route.name == 'catb'}"
+            @click="isOpen">Article
           </router-link>
         </li>
 
@@ -77,7 +73,8 @@
             to="catc" 
             class="text-#ffffff 
             hover:text-#EFC862"
-            :class="{'!text-#EFC862': route.name == 'catc'}">About
+            :class="{'!text-#EFC862': route.name == 'catc'}"
+            @click="isOpen">About
           </router-link>
         </li>
 
@@ -86,17 +83,21 @@
           <router-link 
             to="/cat_supplies" 
             class="text-#ffffff 
-            hover:text-#EFC862">Location
+            hover:text-#EFC862"
+            @click="isOpen">Location
           </router-link>
         </li> 
 
         <li class=" p-10px  w-auto lg:mr-120px lg:w-30px ">
           <router-link 
             to="Login" 
-            class=" text-#232526 hover:text-#ffffff bg-#EFC862 p-5px rounded-5px lg:p-10px">
+            class=" text-#232526 hover:text-#ffffff bg-#EFC862 p-5px rounded-5px lg:p-10px"
+            @click="isOpen">
             <!-- 判斷是否有token變換Login或Logout文字 -->
             <slot name="turnover" :key="open" ></slot> 
           </router-link>
+          <slot name="user_name"></slot>
+
         </li> 
 
         <li class="p-20px w-50px lg:p-0 lg:w-fit">

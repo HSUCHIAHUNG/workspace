@@ -16,6 +16,8 @@ export const setupUserAuthStore = defineStore('user-auth-store', ()=> {
     })
   }  
 
+  // console.log(userInfo.value);
+
   // 把token存進userAccessToken變數當中，讓後在存進cookie
   function FN_SETUP_ACCESSTOKEN (token) {
     return new Promise((resolve)=> {
