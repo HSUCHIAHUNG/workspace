@@ -1,37 +1,33 @@
 <script setup>
-  import { inject,ref } from 'vue';
+  import { inject,ref,reactive } from 'vue';
   import { useRouter, useRoute } from 'vue-router';
   import { setupUserAuthStore } from '../stores/userAurhStore'  // stores資料夾/userAuthStore的方法(pinia)
   import { FETCH_USER_A } from '../service2/api/user' // services2 資料夾裡面的user.js
   import { storeToRefs } from 'pinia';
-
-  const username = ref('')
-  const password = ref('')
-  const route = useRoute();
-
+  
   // 這樣就可以調用swal
   const Swal = inject('$swal') 
 
   // 把router的方法放進變數裡
   const router = useRouter() 
+  // 取當前route.name後變換header字體使用
+  const route = useRoute();
 
   // 把創建好的pinia方法放進變數
   const userAuthStore = setupUserAuthStore() 
-
   
-
-  // FN_SETUP_ACCESSTOKEN方法把Token存進pinia跟cookie
+  // 從pinia取方法出來用
   const { FN_SETUP_ACCESSTOKEN,FN_SETUP_USERINFO } = userAuthStore
+  
+  // 使用者登入資料輸入
+  const user_import = reactive({})
+  
 
   // 送出使用者資料後會進入的函式
   async function onSubmit() {
-      const user = {
-      username: username.value,
-      password: password.value
-  };
-
+    
   // 把使用者資料傳進login物件後發axios把資料post出去驗證是否有該筆資料
-  const  {data, message, success} = await FETCH_USER_A.login(user)
+  const  {data, message, success} = await FETCH_USER_A.login(user_import)
   
   await FN_SETUP_USERINFO(data)
 
@@ -63,9 +59,9 @@
 
         <form @submit.prevent="onSubmit" class="flex flex-col gap-13px max-w-50% min-w-300px">
           <label class="text-white font-bold"  for="">帳號</label>
-          <input type="text" v-model="username">
+          <input type="text" v-model="user_import.username">
           <label class="text-white font-bold" for="">密碼</label>
-          <input type="password" v-model="password">
+          <input type="password" v-model="user_import.password">
           <button type="submit" 
             class="  text-center text- black m-t-25px m-b-15px p10px bg-[#EFC862] brightness-50 border-0 rounded-5px transition cursor-pointer 
             hover:border-1px hover:brightness-100 ">登入
