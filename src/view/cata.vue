@@ -5,7 +5,7 @@
 <template>
 
   <!-- 主內容 -->
-  <main class="row-start-2 row-end-3 col-start-1 col-end-4 p-40px h-fit 
+  <main class="row-start-2 row-end-3 col-start-1 col-end-4 p-40px h-full 
     lg:flex lg:justify-center lg:row-start-2 lg:row-end-3 lg:col-start-2 lg:col-end-3 lg:p-20px lg:h-fit lg:mt-30px">
 
       <!-- 左 -->
@@ -17,18 +17,20 @@
       </div>
 
       <!-- 右 -->
-      <div class="w-295px text-36px lg:w-[400px] lg:text-[72px]">
-        <p class=" w-295px h-100px leading-50px text-left pb-24px text-white font-bold
-          lg:leading-[72px] lg:text-left lg:pb-20px lg:text-white lg:w-auto lg:h-auto ">
-          EA<br>
-          Everyday
-        </p>
-        <p class="text-11px text-left text-white leading-15px font-normal
-          lg:text-[21px] text-left lg:text-white leading-30px">
-          The cat is a domestic species of small carnivorous mammal.It is the only domesticated species in the family Felidae and is often referred to as the domestic cat to distinguish it from the wild members of the family.
-        </p>
+      <div class="w-295px text-36px lg:w-[700px] lg:h-100% lg:text-[72px]">
+        <div class="w-100% h-100% relative overflow-hidden rounded-8">
+            <!-- <img src="../assets/cat/banner3.jpg" alt="" class="top-0 left-0 object-cover object-top"> -->
+        </div>
       </div>
 
   </main>
  
 </template>
+
+<style>
+
+  *{
+    /* outline: 1px solid red; */
+  }
+
+</style>

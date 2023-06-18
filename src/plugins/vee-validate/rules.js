@@ -1,8 +1,20 @@
 import { defineRule } from "vee-validate";
-import { required, alpha_num } from "@vee-validate/rules";
+import {
+    email, required, min, max, alpha_num, numeric, integer, min_value, max_value, is, is_not,
+} from '@vee-validate/rules';
 
 defineRule('required', required);
+defineRule('email', email);
+defineRule('min', min);
+defineRule('min_value', min_value);
+defineRule('max', max);
+defineRule('max_value', max_value);
+defineRule('numeric', numeric);
+defineRule('integer', integer);
 defineRule('alpha_num', alpha_num);
+defineRule('is', is);
+defineRule('is_not', is_not);
+
 
 
 // 帳號驗證
@@ -36,6 +48,7 @@ defineRule('mobile', (val, target, ctx) => {
     }
     return true;
 });
+
 
 
 

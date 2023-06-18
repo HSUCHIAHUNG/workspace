@@ -63,8 +63,10 @@
 
     </catHeader >
    
-    <RouterView @user_name="user_val" />
+    <RouterView />
+    <!-- <RouterView @user_name="user_val" /> -->
   
+
     <cat_footer></cat_footer>
 
   </div>

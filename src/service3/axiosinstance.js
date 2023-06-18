@@ -12,7 +12,6 @@ const axiosInstance = axios.create({
 // 發送請求前的動作
 axiosInstance.interceptors.request.use(function (config) {
   const { headers, ...configSetting } = config
-
   return {...configSetting, headers};
 
 },function (error) {
@@ -22,7 +21,6 @@ axiosInstance.interceptors.request.use(function (config) {
 
 // 接收回應
 axiosInstance.interceptors.response.use(function (response) {
-
   const { status,  data:respData = {}} = response
   const {data, message, success} = respData
 

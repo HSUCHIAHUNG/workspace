@@ -61,21 +61,58 @@ const props = defineProps({
   const showLabelRef = toRef(props, 'showLabel');
   const isTrimRef = toRef(props, 'isTrim');
 
+  const {
+    value: inputValue,
+    errorMessage,
+    handleBlur,
+    handleChange,
+    meta,
+    } = useField(nameRef, rules, {
+      initialValue: valueRef.value,
+      label: labelRef,
+  });
+
+  function handleChangeWithTrim(e) {
+    inputValue.value = isTrimRef.value ? e.target.value.trim() : e.target.value;
+    handleChange(inputValue.value);
+  }
+
+
 </script>
 
 <template>
   
   <label :for="nameRef" :class="classRef" class=" flex flex-col text-white p-t-5px"> 
     <p class="mb-2 block text-left text-sm font-bold">{{labelRef}}</p>
-    <div class=" rounded-5 p-16px border-none bg-white">
+    <div class="rounded-5  border-none bg-white overflow-hidden">
 
       <!-- <span v-if="slots['frontIcon']" class="ml-2 inline-block">
         <slot name="frontIcon"></slot>
       </span> -->
 
+      <input class="w-full block rounded-5 box-border border-none bg-transparent p-8px"
+        @input="handleChangeWithTrim"
+        :value="inputValue"
+        @blur="handleBlur"
+        :id="nameRef"
+        :name="nameRef"
+        :type="typeRef"
+        :placeholder="placeholder"
+        :disabled="disabledRef"
+        :readonly="readonlyRef"
+        :maxlength="maxLengthRef"
+        :min="minRef"
+        :max="maxRef"
+      >
+      <!-- <span v-if="slots['backIcon']" class="mr-2 flex gap-2">
+        <slot name="backIcon"></slot>
+      </span> -->
+      <slot name="button" />
     </div>
-      <!-- <V-Field name="username" rules="required" placeholder="請輸入姓名" class=" rounded-5 p-10px border-none "></V-Field>
-      <V-ErrMsg name="username" class="text-#EFC862 "></V-ErrMsg> -->
+    <transition name="fade">
+      <p v-if="errorMessage" class="mt-2 text-left text-sm text-#EFC862 "><span class="font-medium">{{errorMessage}}</span> </p>
+    </transition>
+    
   </label>
 
 </template>

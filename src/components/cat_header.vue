@@ -79,7 +79,7 @@
         </li>
 
         <li class="lg:pr-75px  p-10px  w-auto">
-          <slot name="scope" :openval=open></slot>
+          <!-- <slot name="scope" :openval=open></slot> -->
           <router-link 
             to="/cat_supplies" 
             class="text-#ffffff 

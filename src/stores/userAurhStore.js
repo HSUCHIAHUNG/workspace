@@ -3,11 +3,12 @@ import { defineStore } from "pinia";
 import { computed, ref } from "vue";
 import {SET_COOKIES, REMOVE_COOKIES} from '../utils/js-cookie'
 
-
+// user-auth-store唯一值(自己命名)
 export const setupUserAuthStore = defineStore('user-auth-store', ()=> {
-  const userInfo = ref({})  // user-auth-store唯一值(自己命名)
-  
+  const userInfo = ref({}) 
   const userAccessToken = ref('')
+  const __BASE_URL__ = ref('https://myttgo.cbsdinfo.com.tw')
+  const __IMG_URL_PATTERN__ = ref('/service/Upfile/')
 
   function FN_SETUP_USERINFO (respUserInfo) {
     return new Promise((resolve)=> {
