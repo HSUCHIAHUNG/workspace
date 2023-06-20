@@ -1,13 +1,6 @@
 // 設定路由
 export const routes = [
     {
-        path: '/validaten',
-        name: 'validaten',
-        meta: {
-        },
-        component: () => import('../view/vee-validate.vue')
-    },
-    {
         path: '/',
         name: 'def_layout',
         component: () =>  import('../view/default_layout.vue'),

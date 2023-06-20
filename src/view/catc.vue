@@ -1,27 +1,78 @@
 <script setup>
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import { FETCH_UPLOADFILE } from '@/service3';
-import { setupUserAuthStore } from "../stores/index"
-import { storeToRefs } from 'pinia';
 
-  const upload_path = ref('')
+  // 預覽圖片使用
+  const fileInput = ref(null);
+  const previewImageUrls = ref();
+  // 用來在圖片上傳前存放的容器
+  const files_upload = ref([])
+  // 發送圖片api返回的data容器(用來返回template使用)
   const modelFormVal = ref({})
-  
+
+  // 取得已上傳相片資料
+  const GetList_parameter = ref({
+    "page": 1,
+    "limit": 10,
+    "keyWord": "Alden"
+  })
+  const album_path = ref({})
+
+  // 燈箱開關控制
+  const open = ref(false)
+
   // images api url
   const __BASE_URL__ = ref('http://taitungttgo.cbsdinfo.com.tw');
   const __IMG_URL_PATTERN__ = ref('/service/Upfile/');
 
-  async function preview_photo(e) {
-    if (e.target.files.length === 0) return;
-    const file = e.target.files[0];
+  
+  // 上傳圖片api
+  async function preview_photos(e) {
+    if (files_upload.value.length === 0) return;
+
+    const modifiedFiles = files_upload.value.map((file) => {
+      const modifiedFileName = `Alden_${file.name}`;
+      // new File可以接受3個參數fileBits(array代表文件的內容)，fileName，options(type) 
+      return new File([file], modifiedFileName);
+    });
+
     const formData = new FormData();
-    formData.append('files', file);
-    upload_path.value = formData;
-    const { error, data } = await FETCH_UPLOADFILE.Create(formData).catch((err) => console.error(err));
+    modifiedFiles.forEach((file) => {
+      // 'files' 是取陣列的名稱
+      formData.append('files', file);
+    });
+
+    const { error, data } = await FETCH_UPLOADFILE.Create(formData).catch((err) =>
+      console.error(err)
+    );
     if (error) return;
-    modelFormVal.value.picture = `${data[0].filePath}`;
+
+    const filePaths = data.map((item) => item.filePath);
+    modelFormVal.value.picture = filePaths;
+    // console.log(modelFormVal);
   }
 
+  // 預覽圖片
+  const previewImages = (e) => {
+    // 將圖片files先存進files_upload當中當用戶點擊確認後發送api
+    const ready_upload_files = Array.from(e.target.files);
+    files_upload.value = ready_upload_files;
+
+    // 將img dom元素裡的files轉成blob格式後渲染到畫面上做預覽
+    const files = fileInput.value.files;
+    previewImageUrls.value = Array.from(files).map(file => URL.createObjectURL(file));
+  };
+
+  // 相簿渲染api發送
+  onMounted (async () => {
+    const { error, data,album_list } = await FETCH_UPLOADFILE.GetList(GetList_parameter.value)
+      album_path.value = album_list;
+  })
+
+  // 控制相簿/上傳燈箱開關
+  const is_upload_open = () => {
+    open.value = !open.value
+  }
 
 </script>
 
@@ -41,42 +92,42 @@ import { storeToRefs } from 'pinia';
       </div>
 
       <!-- 右 -->
-      <div class="w-295px text-36px lg:w-[400px] lg:text-[72px]">
-        <p class=" w-295px h-100px leading-50px text-left pb-24px text-white font-bold
-          lg:leading-[72px] lg:text-left lg:pb-20px lg:text-white lg:w-auto lg:h-auto ">
-          EC<br>
-          Everyday
-        </p>
-        <p class="text-11px text-left text-white font-normal leading-30px
-          lg:text-[21px] lg:text-white ">
-          The cat is a domestic species of small carnivorous mammal.It is the only domesticated species in the family Felidae and is often referred to as the domestic cat to distinguish it from the wild members of the family.
-        </p>
-        <button class="block p-x-40px p-y-10px m-t-15px bg-#EFC862 border-none  rounded-2 font-bold cursor-pointer hover:text-white">相簿 / 上傳</button>
+      <div class="w-295px h-400px text-36px bg-white rounded-3 lg:w-[500px] lg:text-[72px] overflow-auto ">
+        <div class="sticky flex justify-between items-center text-22px  bg-#EFC862 p-15px text-#ffffff font-bold rounded-t-lg ">我的相片</div>
+        <div  class="flex flex-wrap justify-around gap-4 p-10px">
+          <img v-for="img_path in album_path" :key="img_path.filePath" :src="`${__BASE_URL__}${__IMG_URL_PATTERN__}${img_path.filePath}`" alt="" class="max-w-200px object-content rounded-2">
+        </div>
+        <button button @click="is_upload_open" class="block p-x-40px p-y-10px m-[15px_25px] bg-#EFC862 border-none  rounded-2 font-bold cursor-pointer hover:text-white">相簿 / 上傳</button>
       </div>
 
+
       <!-- 照片上傳燈箱 -->
-      <div class="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 h-full w-full bg-black/40">
-        <div class="max-h-90vh w-90% relative overflow-hidden md:w-600px rounded-10px  bg-white  border-1 border-red-500 border-solid ">
-          <div class="sticky bg-#EFC862 p-15px text-#ffffff font-bold ">我的相簿</div>
+      <div :class="{ '!flex': open, '!hidden': !open }" class="fixed flex items-center justify-center top-0 left-0 right-0 bottom-0 h-full w-full bg-black/40  !hidden z-10">
+        <div class="max-h-90vh w-90% relative overflow-hidden md:w-600px rounded-10px  bg-white  border-1 ">
+          <div class="sticky flex justify-between items-center text-22px  bg-#EFC862 p-15px text-#ffffff font-bold ">上傳相片
+            <img @click = is_upload_open src="../assets/cat/close.svg"  class="  p-10px " alt="">
+          </div>
           <form @submit.prevent="onSubmit" class="flex  p-10px ">
             <label for="upload_input" class="block p-x-20px p-y-10px rounded-1 border-1 border-solid border-blue-400 font-bold cursor-pointer hover:bg-blue-400 hover:text-white">上傳 / 預覽</label>
-            <input @change="preview_photo" type="file" name="files" id="upload_input" class="hidden" >
-            <button @click="upload_photo" class="block box-border p-x-20px p-y-10px m-l-20px rounded-1 w-auto  border-1 border-solid border-blue-400 bg-blue-300 text-white text-16px font-bold cursor-pointer hover:bg-blue-400">確定上傳</button>
+            <input  type="file" ref="fileInput" @change="previewImages" multiple name="files" id="upload_input" class="hidden" >
+            <button @click="preview_photos" class="block box-border p-x-20px p-y-10px m-l-20px rounded-1 w-auto  border-1 border-solid border-blue-400 bg-blue-300 text-white text-16px font-bold cursor-pointer hover:bg-blue-400">確定上傳</button>
           </form>
 
           <!-- 預覽圖片 -->
-          <div class="p-10px ">
-            <img v-if="modelFormVal.picture" :src="`${__BASE_URL__}${__IMG_URL_PATTERN__}${modelFormVal.picture}`" alt="" class="max-w-300px object-content ">
+          <div v-for="url in previewImageUrls" :key="url" class="p-10px">
+            <img :src="url" alt="" class="max-w-300px object-content ">
           </div>
         </div> 
       </div>
 
   </main>
-    
+
 </template>
 
 <style>
-  *{
-    /* outline: 1px solid red; */
+
+  *::-webkit-scrollbar{
+    width: 0;
   }
+
 </style>

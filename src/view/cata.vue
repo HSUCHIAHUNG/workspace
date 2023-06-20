@@ -17,10 +17,16 @@
       </div>
 
       <!-- 右 -->
-      <div class="w-295px text-36px lg:w-[700px] lg:h-100% lg:text-[72px]">
-        <div class="w-100% h-100% relative overflow-hidden rounded-8">
-            <!-- <img src="../assets/cat/banner3.jpg" alt="" class="top-0 left-0 object-cover object-top"> -->
-        </div>
+      <div class="w-295px text-36px lg:w-[400px] lg:text-[72px]">
+        <p class=" w-295px h-100px leading-50px text-left pb-24px text-white font-bold
+          lg:leading-[72px] lg:text-left lg:pb-20px lg:text-white lg:w-auto lg:h-auto ">
+          EC<br>
+          Everyday
+        </p>
+        <p class="text-11px text-left text-white font-normal leading-30px
+          lg:text-[21px] lg:text-white ">
+          The cat is a domestic species of small carnivorous mammal.It is the only domesticated species in the family Felidae and is often referred to as the domestic cat to distinguish it from the wild members of the family.
+        </p>
       </div>
 
   </main>

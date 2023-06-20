@@ -1,5 +1,6 @@
 import axios from "axios";
 import Swal from "sweetalert2";
+import { GET_COOKIES } from "../utils/js-cookie";
 
 /* ------------- 此api為Login時使用 --------------- */
 
@@ -12,6 +13,13 @@ const axiosInstance = axios.create({
 // 發送請求前的動作
 axiosInstance.interceptors.request.use(function (config) {
   const { headers, ...configSetting } = config
+
+  // 跟cookie取得Token
+  const accessToken = GET_COOKIES() || ''
+  if(accessToken) {
+    headers['Authorization'] = `Bearer ${accessToken}`
+  }
+
   return {...configSetting, headers};
 
 },function (error) {
@@ -23,6 +31,7 @@ axiosInstance.interceptors.request.use(function (config) {
 axiosInstance.interceptors.response.use(function (response) {
   const { status,  data:respData = {}} = response
   const {data, message, success} = respData
+  const album_list = data.data
 
   // 如果回傳false代表登入失敗跳錯誤彈窗
   if(!success){
@@ -34,7 +43,7 @@ axiosInstance.interceptors.response.use(function (response) {
     })
   }
 
-  return {status , data, message, success};
+  return {status , data, album_list, message, success};
 
 }, function (error) {
   return Promise.reject(error);
